@@ -86,20 +86,57 @@ align-items: center;
 /* contact page styling start  */
 
 .main{
+  padding: 10px;
   display: flex;
   gap: 10%;
-  
+  align-items: center;
+ 
 }
 .right .contacts{
+ 
   color:black;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: normal;
   background-color: cadetblue;
   text-align: center;
-  border-radius: 0px 12px ;
+  border-radius: 30px 0px 30px 0px ;
   
   
 }
 .right  a{
   text-decoration: none;
 }
+
+
+/* About styling start here  */
+.about-main .about-left{
+  
+  display: flex;
+  justify-content: center;
+  
+}
+.about-left img{
+ overflow: hidden;
+}
+
+.about{
+  
+  border-radius: 30px 0px 30px 0px ;
+  text-align: center;
+  color:black;
+  font-size: 24px;
+  font-weight: normal;
+  background-color: cadetblue;
+
+}
+
+.policy-main{
+  padding: 10px;
+  display: flex;
+ flex-direction: row;
+ align-items: center;
+
+}
+
+/* Register page styling start */
+
