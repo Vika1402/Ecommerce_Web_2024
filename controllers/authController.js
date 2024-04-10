@@ -87,7 +87,8 @@ try {
       name:user.name,
       email:user.email,
       phone:user.phone,
-      address:user.address
+      address:user.address,
+      role:user.role
     },
     token,
   })
@@ -99,4 +100,8 @@ try {
     error
   })
 }
+}
+//text contoller 
+export const testController=(req,res)=>{
+  res.send(`protected routed `)
 }
