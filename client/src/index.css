@@ -25,3 +25,43 @@
   font-weight: 400;
   font-style: normal;
 } */
+
+/* navbar style start here  */
+
+.navbar{
+  font-family: "Poppins", sans-serif; ;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px gray;
+--webkit-box-shadow:0 8px 6px -6px gray;
+border-bottom: 0.3px solid gray !important;
+}
+
+.nav-link{
+  font-weight: 300 !important;
+}
+.active{
+  border-bottom: 2px solid rgb(26, 10, 10);
+}
+.navbar-brand{
+  font-weight: 700;
+  font-family: 'roboto',sans-serif;
+  letter-spacing: 2px;
+}
+/* footer style here */
+.footer{
+color: white;
+padding: 25px;
+background-image: radial-gradient( circle 815px at 23.4% -21.8%,  rgba(9,29,85,1) 0.2%, rgba(0,0,0,1) 100.2% );
+}
+.footer a{
+  text-decoration: none;
+  color: white;
+  padding: 15px;
+}
+.footer a:hover{
+color: darkgray;
+border-bottom: 2px solid ;
+border-bottom: 2px solid white
+}
