@@ -34,7 +34,7 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand  ">
-              <FaShopify style={{ color: "orange", fontSize: "35px" }} />
+              <FaShopify style={{ color: "black", fontSize: "35px" }} />
               TechBazar
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
