@@ -4,7 +4,7 @@ import { useAuth } from '../context/auth.js'
 const HomePage = () => {
   const [auth,setAuth]=useAuth()
   return (
-   <Layout title="{&quot;Home-TechBazar&quot;}">
+   <Layout title={'home-page'}>
   <h1>home page </h1>
   <pre>{JSON.stringify(auth,null,4)}</pre>
 </Layout>

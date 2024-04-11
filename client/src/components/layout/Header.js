@@ -3,6 +3,8 @@ import { NavLink, Link } from "react-router-dom";
 import { FaShopify } from "react-icons/fa6";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { FaUserCircle } from "react-icons/fa";
 function Header() {
   const [auth, setAuth] = useAuth();
   const handleLogOut = () => {
@@ -14,7 +16,7 @@ function Header() {
     localStorage.removeItem("auth");
     toast.success("Logout successfully ! ");
   };
-  
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -61,15 +63,34 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <li className="nav-item">
-                    <NavLink
-                      onClick={handleLogOut}
-                      to="/login"
-                      className="nav-link "
-                    >
-                      LogOut
-                    </NavLink>
-                  </li>
+                  <NavDropdown
+                    title={auth?.user?.name}
+                    id="navbarScrollingDropdown"
+                  >
+                    <NavDropdown.Item href="#action3">
+                      <NavLink
+                        to={`/dashboard/${
+                          auth?.user?.role === 1 ? "admin" : "user"
+                        }`}
+                        className="dropdown-item"
+                      >
+                        Dashboard
+                      </NavLink>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action4">
+                      <NavLink
+                        onClick={handleLogOut}
+                        to="/login"
+                        className="nav-link "
+                      >
+                        LogOut
+                      </NavLink>
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item href="#action5">
+                      <FaUserCircle />
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               )}
               <li className="nav-item">

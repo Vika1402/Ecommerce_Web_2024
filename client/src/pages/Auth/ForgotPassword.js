@@ -1,33 +1,26 @@
-
-import Layout from '../../components/layout/Layout.js';
+import React from 'react'
+import Layout from '../../components/layout/Layout'
 import { useState } from "react";
 import toast from 'react-hot-toast';
 import axios from "axios";
-import { useNavigate,useLocation } from "react-router-dom";
-import { useAuth } from '../../context/auth.js';
-const Login = () => {
-  const [auth,setAuth]=useAuth()
-  const location =useLocation()
+import { useNavigate} from "react-router-dom";
+const ForgotPassword = () => {
+
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const[answer,setAnswer]=useState("")
+  const [newPassword, setNewPassword] = useState("");
   
   const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `/api/v1/auth/login`,
-        {  email, password }
+        `/api/v1/auth/forgot-password`,
+        {  email, newPassword,answer}
       );
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
-        setAuth({
-          ...auth,
-          user:res.data.user,
-          token:res.data.token
-        })
-        localStorage.setItem('auth',JSON.stringify(res.data))
-        navigate( location.state || "/");
+        navigate( "/login");
       } else {
         toast.error(res.data.message);
       }
@@ -36,9 +29,9 @@ const Login = () => {
       toast.error("something went wrong ");
     }
   };
-
   return (
-    <Layout title={"Login-Page"}>
+    <Layout title={"forgot-password"}>
+      <h1>Forgot password</h1>
       <div className="register">
         <h3 className="r-h3">LOGIN - HERE</h3>
         <br />
@@ -65,24 +58,39 @@ const Login = () => {
             />
           </div>
           <div className="col-md-6">
+            <label htmlFor="inputAnswer" className="form-label">
+           Answer
+            </label>
+            <input    required
+              type="answer"
+              className="form-control"
+              id="inputEmail4"
+              placeholder="Enter your Secret Answer"
+              value={answer}
+              onChange={(e) => {
+                setAnswer(e.target.value);
+              }}
+            />
+          </div>
+          <div className="col-md-6">
             <label htmlFor="inputPassword4" className="form-label">
               Enter Your Password
             </label>
             <input    required
               type="password"
-              value={password}
+              value={newPassword}
               className="form-control"
               id="inputPassword4"
-              placeholder="Password"
+              placeholder="New Password"
               onChange={(e) => {
-                setPassword(e.target.value);
+                setNewPassword(e.target.value);
               }}
             />
           </div>
 
           <div className="col-12 r-btn-class">
-            <button type="submit" className="btn btn-primary r-btn ">
-              Login
+            <button type="submit" className="btn btn-success r-btn ">
+              RESET
             </button>
           </div>
           <div className="col-12 r-btn-class">
@@ -98,4 +106,4 @@ const Login = () => {
   )
 }
 
-export default Login;
+export default ForgotPassword;
