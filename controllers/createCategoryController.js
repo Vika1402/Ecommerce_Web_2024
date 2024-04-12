@@ -98,7 +98,7 @@ try {
 //delete category 
 export const deleteCategoryController=async(req,res)=>{
   try {
-    const {id}=req.param
+    const {id}=req.params
   await categoryModel.findByIdAndDelete(id)
     res.status(200).send({
       success:true,
@@ -115,3 +115,15 @@ export const deleteCategoryController=async(req,res)=>{
     
   }
 }
+
+
+// Electronics
+// Fashion and Apparel
+// Home and Kitchen Appliances
+// Health and Beauty
+// Books and Media
+// Toys and Games
+// Sports and Fitness
+// Furniture and Home Decor
+// Grocery and Gourmet Food
+// Automotive

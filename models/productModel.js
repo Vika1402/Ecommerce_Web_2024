@@ -21,15 +21,15 @@ price:{
 category:{
   type:mongoose.ObjectId,
   ref:'Category',
-  require:true
+  require:true,
 },
 quantity:{
   type:Number,
   require:true
 },
 picture:{
-  type:Buffer,
-  contentType:String
+  data:Buffer,
+  contentType:String,
 
 },
 shipping:{
