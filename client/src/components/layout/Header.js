@@ -5,6 +5,7 @@ import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaUserCircle } from "react-icons/fa";
+import favicon from '../layout/favicon.png'
 function Header() {
   const [auth, setAuth] = useAuth();
   const handleLogOut = () => {
@@ -34,7 +35,7 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand  ">
-              <FaShopify style={{ color: "black", fontSize: "35px" }} />
+              <img style={{width:'50px'}} src={favicon} alt="" />
               TechBazar
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -35,8 +35,8 @@ const CreateCategory = () => {
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/category");
-      if (data.success) {
-        setCategories(data.category);
+      if (data?.success) {
+        setCategories(data?.category);
       }
     } catch (error) {
       console.log(error);
@@ -88,7 +88,9 @@ const CreateCategory = () => {
   };
   return (
     <Layout title={"Dashboard Categories"}>
-      <div className="container-fluid m-3 p-3">
+     <div className="container-fluid m-3 p-3" >
+
+
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
