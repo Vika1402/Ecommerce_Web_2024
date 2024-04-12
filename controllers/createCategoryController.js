@@ -116,7 +116,7 @@ export const deleteCategoryController=async(req,res)=>{
   }
 }
 
-
+//list of categories 
 // Electronics
 // Fashion and Apparel
 // Home and Kitchen Appliances
