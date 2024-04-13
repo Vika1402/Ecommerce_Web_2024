@@ -5,9 +5,13 @@ import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaUserCircle } from "react-icons/fa";
-import favicon from '../layout/favicon.png'
+import favicon from "../layout/favicon.png";
+import SearchInput from "../Form/SearchInput";
+import useCategory from "../../hooks/useCategory";
+
 function Header() {
   const [auth, setAuth] = useAuth();
+  const categories = useCategory();
   const handleLogOut = () => {
     setAuth({
       ...auth,
@@ -35,20 +39,55 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand  ">
-              <img style={{width:'50px'}} src={favicon} alt="" />
+              <img style={{ width: "50px" }} src={favicon} alt="" />
               TechBazar
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <SearchInput />
               <li className="nav-item">
                 <NavLink to="/" className="nav-link ">
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/category" className="nav-link  ">
-                  Category
-                </NavLink>
+
+              <NavDropdown title="Category" id="basic-nav-dropdown">
+              <li>
+              <NavLink to={`/categories`}>
+                  All Categories
+                  </NavLink>
+
               </li>
+                {categories?.map((c) => (
+                  <NavDropdown.Item href="#action/3.1">
+                  <NavLink to={`/category/${c.slug}`}>
+                  {c.name}
+                  </NavLink>
+                  
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
+
+              {/* <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Categories
+                </a>
+                {categories?.map((c) => (
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        {c.name}
+                      </a>
+                    </li>
+                  </ul>
+                ))}
+              </li> */}
+
               {!auth.user ? (
                 <>
                   <li className="nav-item">

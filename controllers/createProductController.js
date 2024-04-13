@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import productModel from "../models/productModel.js";
 import fs from "fs";
+import { log } from "console";
 export const createProductController = async (req, res) => {
   try {
     const { name, slug, description, price, category, quantity, shipping } =
@@ -28,14 +29,14 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({
           error: "Quantity is required",
         });
-        case !picture:
-          return res.status(500).send({
-            error: "Picture is required",
-          });
-        case picture.size > 1000000:
-          return res.status(500).send({
-            error: "Picture size should be less than 1 MB",
-          });
+      case !picture:
+        return res.status(500).send({
+          error: "Picture is required",
+        });
+      case picture.size > 1000000:
+        return res.status(500).send({
+          error: "Picture size should be less than 1 MB",
+        });
     }
     const products = new productModel({ ...req.fields, slug: slugify(name) });
     if (picture) {
@@ -90,7 +91,7 @@ export const getSingleProductController = async (req, res) => {
     const product = await productModel
       .findOne({ slug: req.params.slug })
       .select("-picture")
-      .populate("category")
+      .populate("category");
     res.status(200).send({
       success: true,
       message: "single product fetched ",
@@ -106,15 +107,16 @@ export const getSingleProductController = async (req, res) => {
   }
 };
 
-//product photo 
-export const productPictureController=async(req,res)=>{
+//product photo
+export const productPictureController = async (req, res) => {
   try {
-    const product=await productModel.findById(req.params.pid).select("picture");
-    if(product.picture.data){
-      res.set("Content-type",product.picture.contentType);
+    const product = await productModel
+      .findById(req.params.pid)
+      .select("picture");
+    if (product.picture.data) {
+      res.set("Content-type", product.picture.contentType);
       return res.status(200).send(product.picture.data);
     }
-    
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -123,18 +125,16 @@ export const productPictureController=async(req,res)=>{
       error,
     });
   }
-}
-
+};
 
 //delete product controller
-export const deleteProductController=async(req,res)=>{
+export const deleteProductController = async (req, res) => {
   try {
-    await productModel.findByIdAndDelete(req.params.pid).select("-picture")
+    await productModel.findByIdAndDelete(req.params.pid).select("-picture");
     res.status(200).send({
-      success:true,
-      message:"product deleted successfull "
-    })
-    
+      success: true,
+      message: "product deleted successfull ",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -143,12 +143,12 @@ export const deleteProductController=async(req,res)=>{
       error,
     });
   }
-}
+};
 //update product router updateProductController
 
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping ,slug} =
+    const { name, description, price, category, quantity, shipping, slug } =
       req.fields;
     const { picture } = req.files;
     //validation start here
@@ -178,7 +178,11 @@ export const updateProductController = async (req, res) => {
           error: "picture  is required and shoud be less than 1 mb ",
         });
     }
-    const products = await productModel.findByIdAndUpdate(req.params.pid,{...req.fields,slug:slugify(name)},{new:true})
+    const products = await productModel.findByIdAndUpdate(
+      req.params.pid,
+      { ...req.fields, slug: slugify(name) },
+      { new: true }
+    );
     if (picture) {
       products.picture.data = fs.readFileSync(picture.path);
       products.picture.contentType = picture.type;
@@ -198,3 +202,115 @@ export const updateProductController = async (req, res) => {
     });
   }
 };
+
+// export const productFilterConntroller = async () => {
+//   try {
+//     const { checked, radio } = req.body;
+//     let args = {};
+//     if (checked.length > 0) {
+//       args.category = checked;
+//     }
+//     if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
+//     const products = await productModel.find(args);
+//     res.status(200).send({
+//       success: true,
+//       products,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).send({
+//       success: false,
+//       message: "Error while filtering Products ",
+//       error,
+//     });
+//   }
+// };
+
+export const productFilterController = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    let args = {};
+    if (checked.length > 0) {
+      args.category = { $in: checked };
+    }
+    if (radio && radio.length === 2) {
+      args.price = { $gte: radio[0], $lte: radio[1] };
+    }
+    const products = await productModel.find(args);
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error while filtering Products ",
+      error,
+    });
+  }
+};
+
+//product count contoleer
+export const productCountController=async (req,res)=>{
+
+  try {
+    const total=await productModel.find({}).estimatedDocumentCount()
+    res.status(200).send({
+      success:true,
+      total
+    })
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success:false,
+      error,
+      message:"Error while count product data "
+    })
+  }
+
+}
+
+//product list controller
+export const productListController=async (req,res)=>{
+
+  try {
+  const per_page=6
+  const page=req.params.page ? req.params.page:1
+    const products=await productModel.find({}).select("-picture").skip((page-1)*per_page).limit(per_page).sort({createdAt:-1});
+    res.status(200).send({
+      success:true,
+      products
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success:false,
+      error,
+      message:"Errorin per page ctrl "
+    })
+  }
+
+}
+
+//serch product controller
+export const searchProductController=async(req,res)=>{
+  try {
+    const {keyword}=req.params
+    const results=await productModel.find({
+      $or:[
+        {name:{$regex:keyword,$options:"i"}},
+        {description:{$regex:keyword,$options:"i"}}
+      ]
+    }).select("-picture")
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success:false,
+      error,
+      message:"Errorin per page ctrl "
+    })
+  }
+}
