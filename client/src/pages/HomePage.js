@@ -5,12 +5,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import { Link } from "react-router-dom";
-import { Checkbox } from "antd";
+import { Checkbox,Radio } from "antd";
+import { Prices } from "../components/Price.js";
 const HomePage = () => {
   
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 const [checked,setChecked]=useState([])
+const [radio,setRadio]=useState([])
   //get all category
    const getAllCategory = async () => {
     try {
@@ -67,6 +69,18 @@ const [checked,setChecked]=useState([])
               {c.name}
             </Checkbox>
           ))}
+          {/* price filter  */}
+          </div>
+          <h4 className="text-center">Filter by Price </h4>
+          <div className="d-flex flex-column">
+         <Radio.Group onChange={e=>setRadio(e.target.value)}>
+         <div key={p._id}>
+         {Prices?.map(p=>(
+            <Radio value={p.array}>{p.name}</Radio>
+          ))}
+         </div>
+          
+         </Radio.Group>
           </div>
          
         </div>
