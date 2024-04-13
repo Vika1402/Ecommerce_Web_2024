@@ -3,7 +3,7 @@ import Layout from "../components/layout/Layout.js";
 import axios from "axios";
 import toast from "react-hot-toast";
 import bannerpic from "../Images/bannerback.png";
-
+import { useCart } from "../context/cart.js";
 import { Prices } from "../components/Price.js";
 
 import React, { useState, useEffect } from "react";
@@ -14,7 +14,7 @@ import { AiOutlineReload } from "react-icons/ai";
 
 const HomePage = () => {
   const navigate = useNavigate();
-
+const[cart,setCart]=useCart()
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -176,7 +176,10 @@ const HomePage = () => {
                     >
                       More Details
                     </button>
-                    <button className="btn btn-dark ">ADD TO CART</button>
+                    <button className="btn btn-dark " onClick={()=>{setCart([...cart,p])
+                    toast.success("Item added to cart ")
+                    
+                    }}>ADD TO CART</button>
                   </div>
                 </div>
               </div>

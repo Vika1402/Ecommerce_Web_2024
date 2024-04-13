@@ -8,9 +8,11 @@ import { FaUserCircle } from "react-icons/fa";
 import favicon from "../layout/favicon.png";
 import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
-
+import { useCart } from "../../context/cart";
+import { Badge } from "antd";
 function Header() {
   const [auth, setAuth] = useAuth();
+  const [cart] = useCart();
   const categories = useCategory();
   const handleLogOut = () => {
     setAuth({
@@ -51,18 +53,12 @@ function Header() {
               </li>
 
               <NavDropdown title="Category" id="basic-nav-dropdown">
-              <li>
-              <NavLink to={`/categories`}>
-                  All Categories
-                  </NavLink>
-
-              </li>
+                <li>
+                  <NavLink to={`/categories`}>All Categories</NavLink>
+                </li>
                 {categories?.map((c) => (
                   <NavDropdown.Item href="#action/3.1">
-                  <NavLink to={`/category/${c.slug}`}>
-                  {c.name}
-                  </NavLink>
-                  
+                    <NavLink to={`/category/${c.slug}`}>{c.name}</NavLink>
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
@@ -134,9 +130,11 @@ function Header() {
                 </>
               )}
               <li className="nav-item">
-                <NavLink to="/cart" className="nav-link ">
-                  Cart (0)
-                </NavLink>
+                <Badge count={cart?.length}>
+                  <NavLink to="/cart" className="nav-link ">
+                    Cart {cart?.length}
+                  </NavLink>
+                </Badge>
               </li>
             </ul>
           </div>
