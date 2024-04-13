@@ -13,8 +13,12 @@ const AdminMenu = () => {
           <ListGroup.Item>
             <NavLink to="/dashboard/admin/create-product ">Create Product </NavLink>
           </ListGroup.Item>
+          
           <ListGroup.Item>
-            <NavLink to="/dashboard/admin/users  ">Users </NavLink>
+            <NavLink to="/dashboard/admin/products ">Product </NavLink>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <NavLink to="/dashboard/admin/users  ">Users</NavLink>
           </ListGroup.Item>
         </ListGroup>
       </div>

@@ -148,7 +148,7 @@ export const deleteProductController=async(req,res)=>{
 
 export const updateProductController = async (req, res) => {
   try {
-    const { name, slug, description, price, category, quantity, shipping } =
+    const { name, description, price, category, quantity, shipping ,slug} =
       req.fields;
     const { picture } = req.files;
     //validation start here

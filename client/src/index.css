@@ -141,3 +141,29 @@ align-items: center;
 
 /* Register page styling start */
 
+
+
+.card{
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+  width: 18pc !important;
+  height: inherit !important;
+  border-radius: 12px !important;
+}
+
+.card img{
+  width: 18pc !important;
+  height: 18pc !important;
+  object-fit: cover;
+object-position: center !important;
+  background-repeat: no-repeat;
+}
+
+.cartButton{
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+  text-decoration-style: none;
+}
+.button-without-underline {
+  text-decoration: none;
+}
