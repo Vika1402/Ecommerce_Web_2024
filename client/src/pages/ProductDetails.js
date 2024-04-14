@@ -40,7 +40,7 @@ const ProductDetails = () => {
   return (
     <Layout>
       <div className="row container product-details">
-        <div className="col-md-6">
+        <div className="col-md-6 main">
           <img
             src={`/api/v1/product/product-picture/${product._id}`}
             className="product-img"

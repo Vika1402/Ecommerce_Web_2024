@@ -1,9 +1,9 @@
 .product-img {
-  margin-left: 20%;
-  width: 30%;
+  margin-left: 30%;
+  width: 40%;
   height: auto;
   border-radius: 8px;
-
+margin-top: 15%;
 }
 
 .product-img:hover {
@@ -59,3 +59,10 @@
   background-color: #495057;
 }
 
+
+
+.product-details-info{
+  display: flex !important;
+  flex-direction: column !important;
+gap: 10px;
+}

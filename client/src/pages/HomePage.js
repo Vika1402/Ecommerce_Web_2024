@@ -7,8 +7,13 @@ import { useCart } from "../context/cart.js";
 import { Prices } from "../components/Price.js";
 import './HomePage.css'
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Checkbox, Radio } from "antd";
+import b1 from '../Images/b1.jpg'
+import b2 from '../Images/b2.jpg'
+
+import b5 from '../Images/b5.jpeg'
+import Carousel from 'react-bootstrap/Carousel';
 
 import { AiOutlineReload } from "react-icons/ai";
 
@@ -115,10 +120,33 @@ const HomePage = () => {
 
   return (
     <Layout title={"ALl Products - Best offers "}>
-      {/* banner image */}
-      <img className="bannerimage" src={bannerpic} alt="" />
-      {/* banner image */}
-      <div className="container-fluid row mt-3 ">
+      
+      <Carousel data-bs-theme="white">
+      <Carousel.Item>
+        <img style={{height:'300px',objectFit:'cover'}}
+          className="d-block w-100"
+          src={b1}
+          alt="First slide"
+        />
+        
+     
+      </Carousel.Item>
+    </Carousel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div className="container-fluid row mt-3">
         <div className="col-md-3 filters">
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
