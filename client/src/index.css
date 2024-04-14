@@ -3,7 +3,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
+ 
+
 }
 
 /* .poppins-regular {
@@ -29,27 +30,6 @@
 
 /* navbar style start here  */
 
-.navbar{
-  font-family: "Poppins", sans-serif; ;
-  font-size: 17px;
-  line-height: 26px;
-  text-transform: uppercase;
-  box-shadow: 0 8px 6px -6px gray;
---webkit-box-shadow:0 8px 6px -6px gray;
-border-bottom: 0.3px solid gray !important;
-}
-
-.nav-link{
-  font-weight: 300 !important;
-}
-.active{
-  border-bottom: 2px solid rgb(26, 10, 10);
-}
-.navbar-brand{
-  font-weight: 700;
-  font-family: 'roboto',sans-serif;
-  letter-spacing: 2px;
-}
 /* footer style here */
 .footer{
 color: white;
@@ -143,32 +123,16 @@ align-items: center;
 
 
 
-.card{
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
-  width: 18pc !important;
-  height: inherit !important;
-  border-radius: 12px !important;
-}
 
-.card img{
-  width: 18pc !important;
-  height: 18pc !important;
-  object-fit: cover;
-object-position: center !important;
-  background-repeat: no-repeat;
-}
 
-.CartButton{
-  justify-items: center;
-display: flex;
-flex-direction: row;
-  gap: 10px;
- 
 
-}
+
 
 .bannerimage{
   width: 100%;
   height: 100px;
   object-fit: cover;
+}
+.product-link {
+  text-decoration: none; /* Remove underline */
 }

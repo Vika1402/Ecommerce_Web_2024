@@ -3,7 +3,7 @@ import Layout from "./../components/layout/Layout";
 import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
-// import DropIn from "braintree-web-drop-in-react";
+import DropIn from 'braintree-web-drop-in-react'
 import { AiFillWarning } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -15,6 +15,7 @@ const CartPage = () => {
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   //total price
@@ -169,7 +170,7 @@ const CartPage = () => {
                   ""
                 ) : (
                   <>
-                    {/* <DropIn
+                    <DropIn
                       options={{
                         authorization: clientToken,
                         paypal: {
@@ -177,12 +178,12 @@ const CartPage = () => {
                         },
                       }}
                       onInstance={(instance) => setInstance(instance)}
-                    /> */}
+                    />
 
                     <button
                       className="btn btn-primary"
                       onClick={handlePayment}
-                      disabled={loading || !instance || !auth?.user?.address}
+                      disabled={ loading || !instance || !auth?.user?.address}
                     >
                       {loading ? "Processing ...." : "Make Payment"}
                     </button>

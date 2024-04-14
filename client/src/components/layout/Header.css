@@ -1,0 +1,34 @@
+
+.navbar{
+  align-items: center;
+  background-image: linear-gradient( 58.2deg,  rgba(40,91,212,0.73) -3%, rgba(171,53,163,0.45) 49.3%, rgba(255,204,112,0.37) 97.7% );
+  font-family: "Poppins", sans-serif; ;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px gray;
+--webkit-box-shadow:0 8px 6px -6px gray;
+border-bottom: 0.3px solid gray !important;
+display: flex !important;
+}
+
+.nav-link{
+  align-items: center;
+  font-weight: 300 !important;
+  font-size: large;
+}
+.active{
+  align-items: center;
+  border-bottom: 2px solid rgb(26, 10, 10);
+}
+.navbar-brand{
+  font-weight: 700;
+  font-family: 'roboto',sans-serif;
+  letter-spacing: 2px;
+  align-items: center;
+  padding-left: 120px !important;
+}
+.nav-item{
+  padding-left: 20px !important;
+  font-size: large;
+}

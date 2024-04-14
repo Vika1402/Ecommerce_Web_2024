@@ -23,6 +23,7 @@ import ProductDetails from "./pages/ProductDetails.js";
 import Categories from "./pages/Categories.js";
 import CategoryProduct from "./pages/CategoryProduct.js";
 import CartPage from "./pages/CartPage.js";
+import AdminOrders from "./pages/Admin/AdminOrder.js";
 
 function App() {
   return (
@@ -51,7 +52,7 @@ function App() {
           <Route path="admin/create-category" element={<CreateCategory/>}/>
           <Route path="admin/users" element={<User/>}/>
           <Route path="admin/products" element={<Products/>}/>
-
+          <Route path="admin/orders" element={<AdminOrders/>}/>
         </Route>
        
         <Route path="/register" element={<Register />} />

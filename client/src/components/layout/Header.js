@@ -10,6 +10,7 @@ import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/cart";
 import { Badge } from "antd";
+import './Header.css'
 function Header() {
   const [auth, setAuth] = useAuth();
   const [cart] = useCart();
@@ -39,7 +40,7 @@ function Header() {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <div className="collapse navbar-collapse nav-item" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand  ">
               <img style={{ width: "50px" }} src={favicon} alt="" />
               TechBazar
@@ -63,27 +64,7 @@ function Header() {
                 ))}
               </NavDropdown>
 
-              {/* <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Categories
-                </a>
-                {categories?.map((c) => (
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        {c.name}
-                      </a>
-                    </li>
-                  </ul>
-                ))}
-              </li> */}
-
+              
               {!auth.user ? (
                 <>
                   <li className="nav-item">

@@ -1,11 +1,11 @@
 import Layout from "../components/layout/Layout.js";
-
+import "./Admin/Products.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 import bannerpic from "../Images/bannerback.png";
 import { useCart } from "../context/cart.js";
 import { Prices } from "../components/Price.js";
-
+import './HomePage.css'
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Radio } from "antd";
@@ -14,7 +14,7 @@ import { AiOutlineReload } from "react-icons/ai";
 
 const HomePage = () => {
   const navigate = useNavigate();
-const[cart,setCart]=useCart()
+  const [cart, setCart] = useCart();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -112,12 +112,13 @@ const[cart,setCart]=useCart()
       console.log(error);
     }
   };
+
   return (
     <Layout title={"ALl Products - Best offers "}>
       {/* banner image */}
       <img className="bannerimage" src={bannerpic} alt="" />
       {/* banner image */}
-      <div className="container-fluid row mt-3 home-page">
+      <div className="container-fluid row mt-3 ">
         <div className="col-md-3 filters">
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
@@ -163,7 +164,8 @@ const[cart,setCart]=useCart()
                 <div className="card-body">
                   <div className="card-name-price">
                     <h5 className="card-title">{p.name}</h5>
-                    <h5 className="card-title card-price">&#8377;{p.price}</h5>
+
+                    <h4 className="card-title card-price">&#8377;{p.price}</h4>
                   </div>
                   <p className="card-text ">
                     {p.description.substring(0, 60)}...
@@ -176,10 +178,15 @@ const[cart,setCart]=useCart()
                     >
                       More Details
                     </button>
-                    <button className="btn btn-dark " onClick={()=>{setCart([...cart,p])
-                    toast.success("Item added to cart ")
-                    
-                    }}>ADD TO CART</button>
+                    <button
+                      className="btn btn-dark "
+                      onClick={() => {
+                        setCart([...cart, p]);
+                        toast.success("Item added to cart ");
+                      }}
+                    >
+                      ADD TO CART
+                    </button>
                   </div>
                 </div>
               </div>
