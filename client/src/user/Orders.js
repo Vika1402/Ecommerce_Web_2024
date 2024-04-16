@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import moment from "moment";
 import Layout from "../components/layout/Layout";
 import UserMenu from "../components/layout/UserMenu";
@@ -23,7 +22,7 @@ const Orders = () => {
   }, [auth?.token]);
   return (
     <Layout title={"Your Orders"}>
-      <div className="container-flui p-3 m-3 dashboard">
+      <div className="container-fluid p-3 m-3 dashboard">
         <div className="row">
           <div className="col-md-3">
             <UserMenu />
@@ -50,7 +49,7 @@ const Orders = () => {
                         <td>{o?.status}</td>
                         <td>{o?.buyer?.name}</td>
                         <td>{moment(o?.createAt).fromNow()}</td>
-                        <td>{o?.payment?.success ? "Success" : "Failed"}</td>
+                        <td>{o?.payment?.success ? "Failed" : "Done"}</td>
                         <td>{o?.products?.length}</td>
                       </tr>
                     </tbody>
