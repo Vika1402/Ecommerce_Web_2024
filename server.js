@@ -7,7 +7,7 @@ import connectDb from "./config/db.js";
 import cors from "cors";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
-import path from "path";
+
 dotenv.config();
 //database connect
 connectDb();
@@ -30,9 +30,7 @@ app.use("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-// app.use('*',function(req,res){
-//   res.sendFile(path.join(__dirname,'./client/build/index.html'));
-// })
+
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
