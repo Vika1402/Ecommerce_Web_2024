@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./../../components/layout/Layout";
-import AdminMenu from "./../../components/layout/AdminMenu";
+import Layout from "./../../components/Layout/Layout";
+import AdminMenu from "./../../components/Layout/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
@@ -17,7 +17,7 @@ const UpdateProduct = () => {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
-  const [picture, setpicture] = useState("");
+  const [photo, setPhoto] = useState("");
   const [id, setId] = useState("");
 
   //get single product
@@ -45,7 +45,7 @@ const UpdateProduct = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/category");
+      const { data } = await axios.get("/api/v1/category/get-category");
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -68,9 +68,9 @@ const UpdateProduct = () => {
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
-      picture && productData.append("picture", picture);
+      photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.post(
+      const { data } = axios.put(
         `/api/v1/product/update-product/${id}`,
         productData
       );
@@ -91,10 +91,11 @@ const UpdateProduct = () => {
     try {
       let answer = window.prompt("Are You Sure want to delete this product ? ");
       if (!answer) return;
+      // eslint-disable-next-line no-unused-vars
       const { data } = await axios.delete(
         `/api/v1/product/delete-product/${id}`
       );
-      toast.success("Product Deleted Succfully");
+      toast.success("Product DEleted Succfully");
       navigate("/dashboard/admin/products");
     } catch (error) {
       console.log(error);
@@ -130,22 +131,22 @@ const UpdateProduct = () => {
               </Select>
               <div className="mb-3">
                 <label className="btn btn-outline-secondary col-md-12">
-                  {picture ? picture.name : "Upload picture"}
+                  {photo ? photo.name : "Upload Photo"}
                   <input
                     type="file"
-                    name="picture"
+                    name="photo"
                     accept="image/*"
-                    onChange={(e) => setpicture(e.target.files[0])}
+                    onChange={(e) => setPhoto(e.target.files[0])}
                     hidden
                   />
                 </label>
               </div>
               <div className="mb-3">
-                {picture ? (
+                {photo ? (
                   <div className="text-center">
                     <img
-                      src={URL.createObjectURL(picture)}
-                      alt="product_picture"
+                      src={URL.createObjectURL(photo)}
+                      alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"
                     />
@@ -153,8 +154,8 @@ const UpdateProduct = () => {
                 ) : (
                   <div className="text-center">
                     <img
-                      src={`/api/v1/product/product-picture/${id}`}
-                      alt="product_picture"
+                      src={`/api/v1/product/product-photo/${id}`}
+                      alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"
                     />

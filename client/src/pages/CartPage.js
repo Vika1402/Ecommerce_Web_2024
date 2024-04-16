@@ -1,21 +1,22 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import Layout from "./../components/layout/Layout";
+import Layout from "./../components/Layout/Layout";
 import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
-import DropIn from 'braintree-web-drop-in-react'
-import { AiFillWarning } from "react-icons/ai";
+import DropIn from "braintree-web-drop-in-react";
 import axios from "axios";
 import toast from "react-hot-toast";
-// import "../styles/CartStyles.css";
+import "../styles/CartStyles.css";
 
 const CartPage = () => {
+  // eslint-disable-next-line no-unused-vars
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   //total price
@@ -25,7 +26,10 @@ const CartPage = () => {
       cart?.map((item) => {
         total = total + item.price;
       });
-      return total;
+      return total.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -99,9 +103,9 @@ const CartPage = () => {
             <div className="col-md-7  p-0 m-0">
               {cart?.map((p) => (
                 <div className="row card flex-row" key={p._id}>
-                  <div className="col-md-808">
+                  <div className="col-md-4">
                     <img
-                      src={`/api/v1/product/product-picture/${p._id}`}
+                      src={`/api/v1/product/product-photo/${p._id}`}
                       className="card-img-top"
                       alt={p.name}
                       width="100%"
@@ -128,7 +132,7 @@ const CartPage = () => {
               <h2>Cart Summary</h2>
               <p>Total | Checkout | Payment</p>
               <hr />
-              <h4>Total : {totalPrice()} ₹ </h4>
+              <h4>Total : {totalPrice()} </h4>
               {auth?.user?.address ? (
                 <>
                   <div className="mb-3">
@@ -183,7 +187,7 @@ const CartPage = () => {
                     <button
                       className="btn btn-primary"
                       onClick={handlePayment}
-                      disabled={ loading || !instance || !auth?.user?.address}
+                      disabled={loading || !instance || !auth?.user?.address}
                     >
                       {loading ? "Processing ...." : "Make Payment"}
                     </button>

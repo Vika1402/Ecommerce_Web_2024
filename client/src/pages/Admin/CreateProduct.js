@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Layout from "./../../components/Layout/Layout";
+import AdminMenu from "./../../components/Layout/AdminMenu";
 import toast from "react-hot-toast";
-import Layout from "../../components/layout/Layout";
 import axios from "axios";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
-import AdminMenu from "../../components/layout/AdminMenu";
 const { Option } = Select;
 
 const CreateProduct = () => {
@@ -15,13 +15,14 @@ const CreateProduct = () => {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [shipping, setShipping] = useState("");
-  const [picture, setPicture] = useState("");
+  const [photo, setPhoto] = useState("");
 
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/category");
+      const { data } = await axios.get("/api/v1/category/get-category");
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -44,33 +45,27 @@ const CreateProduct = () => {
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
-      productData.append("picture", picture);
+      productData.append("photo", photo);
       productData.append("category", category);
-      productData.append("shipping", shipping); // Add shipping to FormData
-  
-      const { data } = await axios.post(
+      const { data } = axios.post(
         "/api/v1/product/create-product",
-        productData,
-        
+        productData
       );
-  
       if (data?.success) {
+        toast.error(data?.message);
+      } else {
         toast.success("Product Created Successfully");
         navigate("/dashboard/admin/products");
-       
-      } else {
-        toast.error(data?.message);
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong");
+      console.log(error);
+      toast.error("something went wrong");
     }
   };
-  
 
   return (
     <Layout title={"Dashboard - Create Product"}>
-      <div className="container-fluid m-3 p-3">
+      <div className="container-fluid m-3 p-3 dashboard">
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
@@ -79,7 +74,7 @@ const CreateProduct = () => {
             <h1>Create Product</h1>
             <div className="m-1 w-75">
               <Select
-                variant={false}
+                bordered={false}
                 placeholder="Select a category"
                 size="large"
                 showSearch
@@ -96,22 +91,22 @@ const CreateProduct = () => {
               </Select>
               <div className="mb-3">
                 <label className="btn btn-outline-secondary col-md-12">
-                  {picture ? picture.name : "Upload Photo"}
+                  {photo ? photo.name : "Upload Photo"}
                   <input
                     type="file"
-                    name="picture"
+                    name="photo"
                     accept="image/*"
-                    onChange={(e) => setPicture(e.target.files[0])}
+                    onChange={(e) => setPhoto(e.target.files[0])}
                     hidden
                   />
                 </label>
               </div>
               <div className="mb-3">
-                {picture && (
+                {photo && (
                   <div className="text-center">
                     <img
-                      src={URL.createObjectURL(picture)}
-                      alt="product_picture"
+                      src={URL.createObjectURL(photo)}
+                      alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"
                     />
@@ -157,7 +152,7 @@ const CreateProduct = () => {
               </div>
               <div className="mb-3">
                 <Select
-                  variant={false}
+                  bordered={false}
                   placeholder="Select Shipping "
                   size="large"
                   showSearch

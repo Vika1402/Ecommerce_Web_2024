@@ -1,39 +1,41 @@
-import { comparePassword, hashPassword } from "../helpers/authHelper.js";
-import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
+import orderModel from "../models/orderModel.js";
 
+import { comparePassword, hashPassword } from "./../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
+
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address, answer } = req.body;
-    //validation
+    //validations
     if (!name) {
-      return res.send({ message: "Name must required" });
+      return res.send({ error: "Name is Required" });
     }
     if (!email) {
-      return res.send({ message: "email must required" });
+      return res.send({ message: "Email is Required" });
     }
     if (!password) {
-      return res.send({ message: "password must required" });
+      return res.send({ message: "Password is Required" });
     }
     if (!phone) {
-      return res.send({ message: "phone must required" });
+      return res.send({ message: "Phone no is Required" });
     }
     if (!address) {
-      return res.send({ message: "address must required" });
+      return res.send({ message: "Address is Required" });
     }
     if (!answer) {
-      return res.send({ message: "answer must required" });
+      return res.send({ message: "Answer is Required" });
     }
-    // check user
-    const existingUser = await userModel.findOne({ email });
-    //existing user
-    if (existingUser) {
+    //check user
+    const exisitingUser = await userModel.findOne({ email });
+    //exisiting user
+    if (exisitingUser) {
       return res.status(200).send({
         success: false,
-        message: "Already registerd plese login ",
+        message: "Already Register please login",
       });
     }
+    //register user
     const hashedPassword = await hashPassword(password);
     //save
     const user = await new userModel({
@@ -45,23 +47,22 @@ export const registerController = async (req, res) => {
       answer,
     }).save();
 
-    res.status(200).send({
+    res.status(201).send({
       success: true,
-      message: "user register successfully ",
+      message: "User Register Successfully",
       user,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error in Registration ",
+      message: "Errro in Registeration",
       error,
     });
   }
 };
 
-// post login controller
-
+//POST LOGIN
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -69,7 +70,7 @@ export const loginController = async (req, res) => {
     if (!email || !password) {
       return res.status(404).send({
         success: false,
-        message: "Invalid email or password ",
+        message: "Invalid email or password",
       });
     }
     //check user
@@ -77,7 +78,7 @@ export const loginController = async (req, res) => {
     if (!user) {
       return res.status(404).send({
         success: false,
-        message: "Email is not registerd ",
+        message: "Email is not registerd",
       });
     }
     const match = await comparePassword(password, user.password);
@@ -87,13 +88,15 @@ export const loginController = async (req, res) => {
         message: "Invalid Password",
       });
     }
-    const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    //token
+    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
     res.status(200).send({
       success: true,
-      message: "Login successfully ! ",
+      message: "login successfully",
       user: {
+        _id: user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,
@@ -106,75 +109,76 @@ export const loginController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error in Login right now ",
+      message: "Error in login",
       error,
     });
   }
 };
-//forgot password controller
+
+//forgotPasswordController
 
 export const forgotPasswordController = async (req, res) => {
   try {
     const { email, answer, newPassword } = req.body;
     if (!email) {
-      res.status(400).send({ message: "Email is required ! " });
+      res.status(400).send({ message: "Emai is required" });
     }
     if (!answer) {
-      res.status(400).send({ message: "Answer is required ! " });
+      res.status(400).send({ message: "answer is required" });
     }
     if (!newPassword) {
-      res.status(400).send({ message: "New PAssword  is required ! " });
+      res.status(400).send({ message: "New Password is required" });
     }
-    // check email and answer
-
+    //check
     const user = await userModel.findOne({ email, answer });
-    //VAlidation
+    //validation
     if (!user) {
-      res.status(400).send({
+      return res.status(404).send({
         success: false,
-        message: "Wrong Email or Password ",
+        message: "Wrong Email Or Answer",
       });
     }
     const hashed = await hashPassword(newPassword);
     await userModel.findByIdAndUpdate(user._id, { password: hashed });
     res.status(200).send({
       success: true,
-      message: "password Reset Successfully !",
+      message: "Password Reset Successfully",
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Somethoing went wrong ",
+      message: "Something went wrong",
       error,
     });
   }
 };
 
-//text contoller
+//test controller
 export const testController = (req, res) => {
   try {
-    res.send(`protected routed `);
+    res.send("Protected Routes");
   } catch (error) {
+    console.log(error);
     res.send({ error });
   }
 };
 
-//profile controller
-
+//update prfole
 export const updateProfileController = async (req, res) => {
   try {
     const { name, email, password, address, phone } = req.body;
     const user = await userModel.findById(req.user._id);
+    //password
     if (password && password.length < 6) {
-      return res.json({ error: `password is require and 6 charcater long` });
+      return res.json({ error: "Passsword is required and 6 character long" });
     }
     const hashedPassword = password ? await hashPassword(password) : undefined;
     const updatedUser = await userModel.findByIdAndUpdate(
       req.user._id,
       {
         name: name || user.name,
-        password: password || user.password,
+        password: hashedPassword || user.password,
         phone: phone || user.phone,
         address: address || user.address,
       },
@@ -182,37 +186,38 @@ export const updateProfileController = async (req, res) => {
     );
     res.status(200).send({
       success: true,
-      message: "Profile Updated Successfully ",
+      message: "Profile Updated SUccessfully",
       updatedUser,
     });
   } catch (error) {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: "Somethoing went wrong update profile  ",
+      message: "Error WHile Update profile",
       error,
     });
   }
 };
 
-export const getOrderConroller = async (req, res) => {
+//orders
+export const getOrdersController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({ buyer: req.user._id })
-      .populate("products", "-picture")
+      .populate("products", "-photo")
       .populate("buyer", "name");
     res.json(orders);
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error while getting the ordedr",
+      message: "Error WHile Geting Orders",
       error,
     });
   }
 };
-
-export const getAllOrderController = async (req, res) => {
+//orders
+export const getAllOrdersController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({})
@@ -224,28 +229,29 @@ export const getAllOrderController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error while getting the orders",
+      message: "Error WHile Geting Orders",
       error,
     });
   }
 };
 
-
+//order status
 export const orderStatusController = async (req, res) => {
   try {
     const { orderId } = req.params;
     const { status } = req.body;
     const orders = await orderModel.findByIdAndUpdate(
       orderId,
-      {status},
+      { status },
       { new: true }
     );
     res.json(orders);
   } catch (error) {
+    console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error while update the order",
-      error
+      message: "Error While Updateing Order",
+      error,
     });
   }
 };

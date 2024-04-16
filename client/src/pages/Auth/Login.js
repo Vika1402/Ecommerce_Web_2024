@@ -1,101 +1,91 @@
-
-import Layout from '../../components/layout/Layout.js';
-import { useState } from "react";
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import Layout from "./../../components/Layout/Layout";
 import axios from "axios";
-import { useNavigate,useLocation } from "react-router-dom";
-import { useAuth } from '../../context/auth.js';
+import { useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
+import "../../styles/AuthStyles.css";
+import { useAuth } from "../../context/auth";
 const Login = () => {
-  const [auth,setAuth]=useAuth()
-  const location =useLocation()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const navigate = useNavigate()
+  const [auth, setAuth] = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `/api/v1/auth/login`,
-        {  email, password }
-      );
+      const res = await axios.post("/api/v1/auth/login", {
+        email,
+        password,
+      });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
         setAuth({
           ...auth,
-          user:res.data.user,
-          token:res.data.token
-        })
-        localStorage.setItem('auth',JSON.stringify(res.data))
-        navigate( location.state || "/");
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        navigate(location.state || "/");
       } else {
         toast.error(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error("something went wrong ");
+      toast.error("Something went wrong");
     }
   };
-
   return (
-    <Layout title={"Login-Page"}>
-      <div className="register">
-        <h3 className="r-h3">LOGIN - HERE</h3>
-        <br />
-        <form
-          className="row g-3 login-form"
-          novalidate
-          onSubmit={handleSubmit}
-        >
-         
-        
-          <div className="col-md-6">
-            <label htmlFor="inputEmail4" className="form-label">
-            Enter Your Email
-            </label>
-            <input    required
+    <Layout title="Register - Ecommer App">
+      <div className="form-container " style={{ minHeight: "90vh" }}>
+        <form onSubmit={handleSubmit}>
+          <h4 className="title">LOGIN FORM</h4>
+
+          <div className="mb-3">
+            <input
               type="email"
-              className="form-control"
-              id="inputEmail4"
-              placeholder="Email"
+              autoFocus
               value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              onChange={(e) => setEmail(e.target.value)}
+              className="form-control"
+              id="exampleInputEmail1"
+              placeholder="Enter Your Email "
+              required
             />
           </div>
-          <div className="col-md-6">
-            <label htmlFor="inputPassword4" className="form-label">
-              Enter Your Password
-            </label>
-            <input    required
+          <div className="mb-3">
+            <input
               type="password"
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="form-control"
-              id="inputPassword4"
-              placeholder="Password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              id="exampleInputPassword1"
+              placeholder="Enter Your Password"
+              required
             />
           </div>
-
-          <div className="col-12 r-btn-class">
-            <button type="submit" className="btn btn-primary r-btn ">
-              Login
-            </button>
-          </div>
-          <div className="col-12 r-btn-class">
-            <button type="submit" className="btn btn-warning r-btn " onClick={()=>{
-              navigate('/forgot-password')
-            }}>
+          <div className="mb-3">
+            <button
+              type="button"
+              className="btn forgot-btn"
+              onClick={() => {
+                navigate("/forgot-password");
+              }}
+            >
               Forgot Password
             </button>
           </div>
+
+          <button type="submit" className="btn btn-primary">
+            LOGIN
+          </button>
         </form>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
 export default Login;

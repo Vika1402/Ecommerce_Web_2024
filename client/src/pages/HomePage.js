@@ -1,21 +1,13 @@
-import Layout from "../components/layout/Layout.js";
-import "./Admin/Products.css";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Checkbox, Radio } from "antd";
+import { Prices } from "../components/Prices";
+import { useCart } from "../context/cart";
 import axios from "axios";
 import toast from "react-hot-toast";
-import bannerpic from "../Images/bannerback.png";
-import { useCart } from "../context/cart.js";
-import { Prices } from "../components/Price.js";
-import './HomePage.css'
-import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Checkbox, Radio } from "antd";
-import b1 from '../Images/b1.jpg'
-import b2 from '../Images/b2.jpg'
-
-import b5 from '../Images/b5.jpeg'
-import Carousel from 'react-bootstrap/Carousel';
-
+import Layout from "./../components/Layout/Layout";
 import { AiOutlineReload } from "react-icons/ai";
+import "../styles/Homepage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -31,7 +23,7 @@ const HomePage = () => {
   //get all cat
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/category");
+      const { data } = await axios.get("/api/v1/category/get-category");
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -39,12 +31,9 @@ const HomePage = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getAllCategory();
-  }, []);
 
   useEffect(() => {
-    getAllProducts();
+    getAllCategory();
     getTotal();
   }, []);
   //get products
@@ -73,6 +62,7 @@ const HomePage = () => {
   useEffect(() => {
     if (page === 1) return;
     loadMore();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
   //load more
   const loadMore = async () => {
@@ -99,10 +89,12 @@ const HomePage = () => {
   };
   useEffect(() => {
     if (!checked.length || !radio.length) getAllProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked.length, radio.length]);
 
   useEffect(() => {
     if (checked.length || radio.length) filterProduct();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked, radio]);
 
   //get filterd product
@@ -117,36 +109,17 @@ const HomePage = () => {
       console.log(error);
     }
   };
-
   return (
     <Layout title={"ALl Products - Best offers "}>
-      
-      <Carousel data-bs-theme="white">
-      <Carousel.Item>
-        <img style={{height:'300px',objectFit:'cover'}}
-          className="d-block w-100"
-          src={b1}
-          alt="First slide"
-        />
-        
-     
-      </Carousel.Item>
-    </Carousel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <div className="container-fluid row mt-3">
+      {/* banner image */}
+      <img
+        src="/images/banner.png"
+        className="banner-img"
+        alt="bannerimage"
+        width={"100%"}
+      />
+      {/* banner image */}
+      <div className="container-fluid row mt-3 home-page">
         <div className="col-md-3 filters">
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
@@ -185,32 +158,39 @@ const HomePage = () => {
             {products?.map((p) => (
               <div className="card m-2" key={p._id}>
                 <img
-                  src={`/api/v1/product/product-picture/${p._id}`}
+                  src={`/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
                 <div className="card-body">
                   <div className="card-name-price">
                     <h5 className="card-title">{p.name}</h5>
-
-                    <h4 className="card-title card-price">&#8377;{p.price}</h4>
+                    <h5 className="card-title card-price">
+                      {p.price.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })}
+                    </h5>
                   </div>
                   <p className="card-text ">
                     {p.description.substring(0, 60)}...
                   </p>
-
-                  <div className="CartButton">
+                  <div className="card-name-price">
                     <button
-                      className="btn btn-info "
+                      className="btn btn-info ms-1"
                       onClick={() => navigate(`/product/${p.slug}`)}
                     >
                       More Details
                     </button>
                     <button
-                      className="btn btn-dark "
+                      className="btn btn-dark ms-1"
                       onClick={() => {
                         setCart([...cart, p]);
-                        toast.success("Item added to cart ");
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...cart, p])
+                        );
+                        toast.success("Item Added to cart");
                       }}
                     >
                       ADD TO CART
@@ -223,7 +203,7 @@ const HomePage = () => {
           <div className="m-2 p-3">
             {products && products.length < total && (
               <button
-                className="btn loadmore btn-success"
+                className="btn loadmore"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);

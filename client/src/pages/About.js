@@ -1,49 +1,25 @@
 import React from "react";
-import Layout from "../components/layout/Layout.js";
-import about from "../Images/About.png";
+import Layout from "./../components/Layout/Layout";
+
 const About = () => {
   return (
-    <Layout title={'About'}>
-      <div className="about-main">
-        <div className="about-left">
-          <img src={about} alt="" />
+    <Layout title={"About us - Ecommer app"}>
+      <div className="row contactus ">
+        <div className="col-md-6 ">
+          <img
+            src="/images/about.jpeg"
+            alt="contactus"
+            style={{ width: "100%" }}
+          />
         </div>
-        <div className="about-right">
-          <p>
-          <div className="about">
-          <strong>About Us</strong>
-          </div>
-           
-            <br />
-            Welcome to TechBazar, your premier destination for discovering
-            unique treasures and must-have items! Established in 2015, Fabulous
-            Finds was born out of a passion for uncovering hidden gems and
-            sharing them with the world.
-            <br />
-            <br />
-            Our team scours the globe to bring you an eclectic collection of
-            fashion-forward clothing, accessories, home decor, gadgets, and
-            more. From vintage-inspired pieces to cutting-edge innovations, we
-            curate our selection with care to ensure that every product reflects
-            our commitment to quality and style.
-            <br />
-            <br />
-            At TechBazar, we believe that shopping should be an adventure.
-            That's why we've designed our website to be a virtual treasure
-            trove, where you can explore new trends, discover unique artisans,
-            and find inspiration for your next great find.
-            <br />
-            <br />
-            As a customer-centric company, we prioritize your satisfaction above
-            all else. We offer secure payment options, hassle-free returns, and
-            dedicated customer support to ensure that your shopping experience
-            with us is nothing short of fabulous.
-            <br />
-            <br />
-            Join the TechBazar community today and embark on a journey of
-            discovery, creativity, and endless possibilities. From fashionistas
-            to tech enthusiasts, there's something for everyone at Fabulous
-            Finds!
+        <div className="col-md-4">
+          <p className="text-justify mt-2">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+            officiis obcaecati esse tempore unde ratione, eveniet mollitia,
+            perferendis eius temporibus dicta blanditiis doloremque explicabo
+            quasi sunt vero optio cum aperiam vel consectetur! Laborum enim
+            accusantium atque, excepturi sapiente amet! Tenetur ducimus aut
+            commodi illum quidem neque tempora nam.
           </p>
         </div>
       </div>

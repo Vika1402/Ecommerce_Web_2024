@@ -1,22 +1,26 @@
 import React from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 import { NavLink } from "react-router-dom";
-
 const UserMenu = () => {
   return (
-    <>
-     
-        <h4>User Pannel</h4>
-        <ListGroup>
-          <ListGroup.Item action href="#link1">
-            <NavLink to="/dashboard/user/profile ">User profile</NavLink>
-          </ListGroup.Item>
-          <ListGroup.Item action href="#link2">
-            <NavLink to="/dashboard/user/orders ">Orders </NavLink>
-          </ListGroup.Item>
-        </ListGroup>
-      
-    </>
+    <div>
+      <div className="text-center dashboard-menu">
+        <div className="list-group">
+          <h4>Dashboard</h4>
+          <NavLink
+            to="/dashboard/user/profile"
+            className="list-group-item list-group-item-action"
+          >
+            Profile
+          </NavLink>
+          <NavLink
+            to="/dashboard/user/orders"
+            className="list-group-item list-group-item-action"
+          >
+            Orders
+          </NavLink>
+        </div>
+      </div>
+    </div>
   );
 };
 

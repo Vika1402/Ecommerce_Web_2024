@@ -5,15 +5,10 @@ const CategoryForm = ({ handleSubmit, value, setValue }) => {
     <>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
           <input
             type="text"
             className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter new Category"
+            placeholder="Enter new category"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />

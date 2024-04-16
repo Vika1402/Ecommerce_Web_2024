@@ -1,22 +1,19 @@
-import React from 'react'
-import Layout from '../components/layout/Layout';
-import { Link } from 'react-router-dom';
-const PageNotFound = () => {
+import React from "react";
+import { Link } from "react-router-dom";
+import Layout from "./../components/Layout/Layout";
+
+const Pagenotfound = () => {
   return (
-    <Layout title={'page not found'}>
-     <div className='pagenotfound'>
-     <h1>
-      404
-     </h1>
-     <p>
-      Opps ! Page Not Found 
-     </p>
-     <Link to="/"> <button type="button" className="btn btn-outline-success">Go Back</button></Link>
-    
-
-     </div>
+    <Layout title={"go back- page not found"}>
+      <div className="pnf">
+        <h1 className="pnf-title">404</h1>
+        <h2 className="pnf-heading">Oops ! Page Not Found</h2>
+        <Link to="/" className="pnf-btn">
+          Go Back
+        </Link>
+      </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default PageNotFound;
+export default Pagenotfound;
