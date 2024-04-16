@@ -40,7 +40,7 @@
 
 import connectDb from "./config/db.js";
 import express from "express";
-import colors from "colors";
+i
 import dotenv from "dotenv";
 import morgan from "morgan";
 import authRoutes from "./routes/authRoute.js";
