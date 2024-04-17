@@ -40,7 +40,7 @@ res.sendFile(path.join(__dirname,'./client/build/index.html'))
 })
 
 //PORT
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT ;
 
 //run listen
 app.listen(PORT, () => {
