@@ -35,9 +35,9 @@ app.use("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 //rest api
-app.get("/", (req, res) => {
-  res.send("<h1>Welcome to ecommerce app</h1>");
-});
+// app.get("/", (req, res) => {
+//   res.send("<h1>Welcome to ecommerce app</h1>");
+// });
 
 //PORT
 const PORT = process.env.PORT || 8080;
