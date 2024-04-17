@@ -9,40 +9,41 @@ import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-//configure env
+
+// Configure environment variables
 dotenv.config();
 
-//databse config
+// Database configuration
 connectDB();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-//rest object
+
+// Rest object
 const app = express();
 
-//middelwares
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "./client/build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
-//routes
+// Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 
-//rest api
+// Wildcard route to serve the React app
 app.use("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-//PORT
+// PORT
 const PORT = process.env.PORT || 8080;
 
-//run listen
+// Start the server
 app.listen(PORT, () => {
   console.log(
-    `Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan
-      .white
+    `Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan.white
   );
 });
