@@ -28,7 +28,9 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 // Serve static files
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+const staticFilesPath = path.join(__dirname, 'client', 'build');
+console.log("Static files path:", staticFilesPath); // Log the static files path
+app.use(express.static(staticFilesPath));
 
 // Routes
 app.use("/api/v1/auth", authRoutes);
@@ -37,7 +39,9 @@ app.use("/api/v1/product", productRoutes);
 
 // Wildcard route to serve the React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  const indexPath = path.join(staticFilesPath, 'index.html');
+  console.log("Serving index.html:", indexPath); // Log the path of index.html being served
+  res.sendFile(indexPath);
 });
 
 // PORT
@@ -46,6 +50,6 @@ const PORT = process.env.PORT || 5000; // Default to port 5000 if PORT is not de
 // Start the server
 app.listen(PORT, () => {
   console.log(
-    `Server running in  port ${PORT}`.bgCyan.white
+    `Server running on port ${PORT}`.bgCyan.white
   );
 });
