@@ -31,13 +31,13 @@ app.use(express.static(path.join(__dirname, "./client/build")));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
-// app.use("*", function (req, res) {
-//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
-// });
-//rest api
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+app.use("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
+//rest api
+// app.get("/", (req, res) => {
+//   res.send("<h1>Welcome to ecommerce app</h1>");
+// });
 
 //PORT
 const PORT = process.env.PORT || 8080;
