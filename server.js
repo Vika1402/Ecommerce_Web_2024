@@ -18,7 +18,7 @@ connectDB();
 //rest object
 const app = express();
 
-const __filename=fileURLToPath(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //middelwares
@@ -36,7 +36,7 @@ app.use("/api/v1/product", productRoutes);
 // });
 //rest api
 app.get("/", (req, res) => {
-  res.send("<h1>Welcome to ecommerce app</h1>");
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 //PORT
